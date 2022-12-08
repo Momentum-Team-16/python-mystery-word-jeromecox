@@ -1,6 +1,6 @@
 import random
 import string
-remaining_list = list(string.ascii_uppercase)
+available_letters = list(string.ascii_uppercase)
 
 
 def play_game():
@@ -15,7 +15,9 @@ def play_game():
 
     guess_count = 0
     guessed_list = []
-    while guess_count < 9:
+    while guess_count < 8:
+        print('Available letters to guess:')
+        print(available_letters)
         guess = input('Guess a letter: ').upper()
         if not guess.isalpha() or len(guess) != 1:
             print('Invalid guess. Please guess one letter.')
@@ -25,11 +27,13 @@ def play_game():
             continue
         elif guess in mystery_word:
             guess_count += 1
+            available_letters.remove(guess)
             print('Good guess!')
             print(f'Guesses remaining: {8 - guess_count}')
             continue
         else:
             guess_count += 1
+            available_letters.remove(guess)
             print('Incorrect guess')
             print(f'Guesses remaining: {8 - guess_count}')
             continue
