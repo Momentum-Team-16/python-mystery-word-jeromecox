@@ -1,4 +1,5 @@
 import random
+import os
 
 
 with open('words.txt') as my_file:
@@ -37,6 +38,7 @@ def make_word(level):
 def play_game():
     play = True
     while play:
+        os.system('clear')
         print('\n❓❔ LET\'S PLAY A GUESSING GAME!❔❓')
         input_level = input('\nLevel: (e)asy / (m)edium / (h)ard: ').lower()
 
@@ -52,41 +54,48 @@ def play_game():
 
         guess_count = 0
         guessed_list = []
+        incorrect_list = []
+        os.system('clear')
         while guess_count < 8 and '_' in blank_list:
-            print('')
+            print('\n❓❔ JEROME\'S GUESSING GAME!❔❓')
             if guess_count == 7:
                 print('\n⚠️  WARNING: ONE GUESS REMAINING ⚠️\n')
+            print('')
             print(*blank_list)
             print(f'\nGuesses remaining: {8 - guess_count}')
-            unpack_guessed = ", ".join(guessed_list)
-            if len(guessed_list) > 0:
-                print(f'\nYou have already guessed: {unpack_guessed}')
+            unpack_incorrect = ", ".join(incorrect_list)
+            if len(incorrect_list) > 0:
+                print(f'\nIncorrect guesses: {unpack_incorrect}')
             guess = input('\nGuess a letter: ').upper()
+            os.system('clear')
             if not guess.isalpha() or len(guess) != 1:
                 print('\n⛔️⚠️  INVALID GUESS. Please guess one letter. ⚠️ ⛔️ ')
                 continue
             elif guess in guessed_list:
-                print('\nYou have already guessed this letter.')
+                print(f'\n🤦🏽‍♀️ \'{guess}\' has already been guessed! 🤦🏽')
                 continue
             elif guess in mystery_word:
                 guessed_list.append(guess)
                 for i in range(len(blank_list)):
                     if unpacked[i] in guessed_list:
                         blank_list[i] = unpacked[i]
-                print('\nGood guess!')
+                print(f'\n✅ \'{guess}\' was a good guess! ✅')
                 continue
             else:
                 guess_count += 1
                 guessed_list.append(guess)
-                print('\nIncorrect guess')
+                incorrect_list.append(guess)
+                print(f'\n❌ \'{guess}\' was a bad guess ❌')
 
         if '_' in blank_list:
+            os.system('clear')
             print(f'\nThe mystery word was: {mystery_word}')
             print('\nSorry! You lose!')
         else:
+            os.system('clear')
             print('')
             print(*blank_list)
-            print('\nCongratulations! You win!')
+            print('\n🏆 Congratulations! You win! 🏆')
 
         good_input = 0
         while good_input == 0:
@@ -99,6 +108,7 @@ def play_game():
                 good_input += 1
             else:
                 play = False
+                os.system('clear')
                 good_input += 1
 
 
