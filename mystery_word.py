@@ -1,5 +1,6 @@
 import random
 import os
+import time
 
 
 with open('words.txt') as my_file:
@@ -52,17 +53,31 @@ def play_game():
 
         # print(f'\n{mystery_word}')
 
-        guess_count = 0
+        wrong_count = 0
+        wrong7_count = 0
         guessed_list = []
         incorrect_list = []
         os.system('clear')
-        while guess_count < 8 and '_' in blank_list:
-            print('\n❓❔ JEROME\'S GUESSING GAME!❔❓')
-            if guess_count == 7:
+        while wrong_count < 8 and '_' in blank_list:
+            if wrong_count == 7 and wrong7_count == 0:
+                wrong7_count += 1
+                os.system('clear')
                 print('\n⚠️  WARNING: ONE GUESS REMAINING ⚠️\n')
-            print('')
+                time.sleep(0.5)
+                print('\n⚠️  WARNING: ONE GUESS REMAINING ⚠️\n')
+                time.sleep(0.5)
+                print('\n⚠️  WARNING: ONE GUESS REMAINING ⚠️\n')
+                time.sleep(0.5)
+                os.system('clear')
+                print('\n❓❔ JEROME\'S GUESSING GAME!❔❓')
+                print('\n⚠️  WARNING: ONE GUESS REMAINING ⚠️\n')
+            elif wrong_count == 7 and wrong7_count == 1:
+                print('\n❓❔ JEROME\'S GUESSING GAME!❔❓')
+                print('\n⚠️  WARNING: ONE GUESS REMAINING ⚠️\n')
+            else:
+                print('\n❓❔ JEROME\'S GUESSING GAME!❔❓\n')
             print(*blank_list)
-            print(f'\nGuesses remaining: {8 - guess_count}')
+            print(f'\nGuesses remaining: {8 - wrong_count}')
             unpack_incorrect = ", ".join(incorrect_list)
             if len(incorrect_list) > 0:
                 print(f'\nIncorrect guesses: {unpack_incorrect}')
@@ -80,12 +95,14 @@ def play_game():
                     if unpacked[i] in guessed_list:
                         blank_list[i] = unpacked[i]
                 print(f'\n✅ \'{guess}\' was a good guess! ✅')
+                time.sleep(0.5)
                 continue
             else:
-                guess_count += 1
+                wrong_count += 1
                 guessed_list.append(guess)
                 incorrect_list.append(guess)
                 print(f'\n❌ \'{guess}\' was a bad guess ❌')
+                time.sleep(0.5)
 
         if '_' in blank_list:
             os.system('clear')
@@ -93,8 +110,8 @@ def play_game():
             print('\nSorry! You lose!')
         else:
             os.system('clear')
-            print('')
-            print(*blank_list)
+            # print('')
+            print(f'\n{mystery_word}')
             print('\n🏆 Congratulations! You win! 🏆')
 
         good_input = 0
